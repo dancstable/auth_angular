@@ -1,18 +1,38 @@
-# Auth0 Angular Library
+# Microservice Overview and Instructions
 
+A microservices architecture offers several advantages over a monolithic application. With microservices the overall application is broken up into distinct services. This design allows for:
+- Scaling of each microservice differently, such as search, payments, data science, etc.
+- Separation of concerns
+- Each team can work independently on their domain
+- Mix of technologies - e.g., each service can be independently composed of Django, Flask, FastApi, Falcon, Javascript/Node etc.
+
+![microservice](./docs/microservice.png "Microservice")
+
+# Microservices Architecture
+
+Central to a microservices architecture is the authentication layer, which is needed for authentication, authorization, and provides overall identity access management.
+
+Users are authenticated by tokens issued by the authentication layer. When a user logs in, the auth layer generates a signed token and returns it to the client. 
+
+![auth flow](./docs/flow.png "Auth Flow")
+
+For every service that the client seeks to access, each microservice verifies the signature of the JWT token by using the same secret provided to sign the token. This verification is automatically done by Auth0, such that the secret key does not have to be distributed to every service.  
+
+![authorize](./docs/authorize.png "Authorize")
+
+## Installation
 ### Requirements
 
-This project only supports the [actively supported versions of Angular as stated in the Angular documentation](https://angular.io/guide/releases#actively-supported-versions). Whilst other versions might be compatible they are not actively supported.
+This project only supports the [actively supported versions of Angular as stated in the Angular documentation](https://angular.io/guide/releases#actively-supported-versions). While other versions might be compatible they are not actively supported.
 
-### Installation
-
-Using npm:
+## Install
+The auth0-angular libary is required. Using npm:
 
 ```sh
 npm install @auth0/auth0-angular
 ```
 
-The library can also be installed using the Angular CLI:
+There is also `ng-add` support, so the library can also be installed using the Angular CLI:
 
 ```sh
 ng add @auth0/auth0-angular
@@ -113,57 +133,21 @@ For more code samples on how to integrate the **auth0-angular** SDK in your **An
 
 ## API reference
 
+Explore public API's available in auth0-angular.
+
 - [AuthService](https://auth0.github.io/auth0-angular/classes/AuthService.html) - service used to interact with the SDK.
 - [AuthConfig](https://auth0.github.io/auth0-angular/interfaces/AuthConfig.html) - used to configure the SDK.
 
-## Features
-This angular application performs via Auth0:
+## What is Auth0?
 
-- Login
-- Log out
-- Showing the user profile
-- Protecting routes using the authentication guard
-- Calling APIs with automatically-attached bearer tokens
+Auth0 helps you to:
 
-# Install
-## Configuration
-
-The app needs to be configured with your Auth0 domain and client ID in order to work. In the root of the sample, copy `auth_config.json.example` and rename it to `auth_config.json`. Open the file and replace the values with those from your Auth0 tenant:
-
-```json
-{
-  "domain": "<YOUR AUTH0 DOMAIN>",
-  "clientId": "<YOUR AUTH0 CLIENT ID>",
-  "audience": "<YOUR AUTH0 API AUDIENCE IDENTIFIER>"
-}
-```
-
-## Development server
-
-Run `npm run dev` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-This will automatically start a Node + Express server as the backend on port `3001`. The Angular application is configured to proxy through to this on any `/api` route.
-
-## Build
-
-Run `npm build` to build the project. The build artifacts will be stored in the `dist/login-demo` directory. Use the `--prod` flag for a production build.
-
-To build and run a production bundle and serve it, run `npm run prod`. The application will run on `http://localhost:3000`.
-
-## Run Using Docker
-
-You can build and run the sample in a Docker container by using the provided scripts:
-
-```bash
-# In Linux / MacOS
-sh exec.sh
-
-# Windows Powershell
-./exec.ps1
-```
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
+* Add authentication with [multiple authentication sources](https://auth0.com/docs/identityproviders),
+either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, among others**,or
+enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
+* Add support for **[linking different user accounts](https://auth0.com/docs/link-accounts)** with the same user.
+* Support for generating signed [JSON Web Tokens](https://auth0.com/docs/jwt) to call your APIs and
+**flow the user identity** securely.
+* Analytics of how, when and where users are logging in.
+* Pull data from other sources and add it to the user profile, through [JavaScript rules](https://auth0.com/docs/rules).
 

@@ -41,9 +41,34 @@ import { environment as env } from '../environments/environment';
     HighlightModule,
     FontAwesomeModule,
     AuthModule.forRoot({
-      ...env.auth,
+      //...env.auth,
+      domain: 'dev-stableprice.us.auth0.com',
+      clientId: 'aioYUEOdGqlIcGDWrFmsf1tlvXnUslG0',
+      authorizationParams: {
+        //redirect_uri: window.location.origin
+        // Request this audience at user authentication time
+        audience: 'https://dev-stableprice.us.auth0.com/api/v2/',
+        // Request this scope at user authentication time
+        scope: 'read:current_user',
+      },
       httpInterceptor: {
-        ...env.httpInterceptor,
+        //...env.httpInterceptor,
+        allowedList: [
+          {
+            // Match any request that starts 'https://dev-stableprice.us.auth0.com/api/v2/' (note the asterisk)
+            uri: 'https://dev-stableprice.us.auth0.com/api/v2/*',
+            tokenOptions: {
+              authorizationParams: {
+                // The attached token should target this audience
+                audience: 'https://dev-stableprice.us.auth0.com/api/v2/',
+    
+                // The attached token should have these scopes
+                scope: 'read:current_user'
+              }
+            }
+          }
+        ]
+        
       },
     }),
   ],
